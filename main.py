@@ -1,3 +1,6 @@
+import math
+
+
 def at_bash(str):
     return str[::-1]
 
@@ -35,6 +38,47 @@ def caesarDecrypt(text, shift):
             
     print(decrypted)
     return decrypted
+
+def columnarEncrypt(text, key):
+    encrypted = ""
+
+    # Create and fill array with "_"
+    rows, cols = (len(key), math.ceil(len(text)/len(key)))
+    arr = [["_" for i in range(rows)] for j in range(cols)]
+
+    # Structure:
+    # cols   rows -->          arr[cols][rows]
+    #  |
+    #  |
+    #  v
+
+    # Fill the actual character to array
+    for i in range(cols):
+        for j in range(rows):
+            try:
+                arr[i][j] = text[j+(i*(rows))]
+            except IndexError:
+                pass
+    
+    # Create list representing string:key as list of ascii
+    keyList = []
+    for i in range(len(key)):
+        keyList.append(ord(key[i]))
+
+    # Convert ascii to sorted number for future exporting
+    for i in range(len(key)):
+        keyList[keyList.index(min(j for j in keyList if j>(i-1)))] = i
+
+    # Add character to encrypted, per column based on keylist
+    for j in range(rows):
+        for i in range(cols):
+            try:
+                encrypted = encrypted + arr[i][keyList[j]]
+            except IndexError:
+                pass
+    
+    print(encrypted)
+    return(encrypted)
 
 def encrypt(str):
     print(affine(str))
