@@ -13,6 +13,29 @@ def affine(str):
     print("encrypted")
     return encrypted
 
+def caesarEncrypt(text, shift):
+    encrypted = ""
+    for i in range(len(text)):
+        if(ord(text[i])+int(shift)>90):
+            encrypted = encrypted + chr(ord(text[i])+int(shift)-26)
+        else:
+            encrypted = encrypted + chr(ord(text[i])+int(shift))
+            
+    print(encrypted)
+    return encrypted
+
+
+def caesarDecrypt(text, shift):
+    decrypted = ""
+    for i in range(len(text)):
+        if(ord(text[i])-int(shift)<65):
+            decrypted = decrypted + chr(ord(text[i])-int(shift)+26)
+        else:
+            decrypted = decrypted + chr(ord(text[i])-int(shift))
+            
+    print(decrypted)
+    return decrypted
+
 def encrypt(str):
     print(affine(str))
 
