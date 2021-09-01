@@ -93,13 +93,12 @@ def columnarEncrypt(text, key):
     for j in range(rows):
         for i in range(cols):
             try:
-                encrypted = encrypted + arr[i][keyList[j]]
-                print(j,i,arr[i][keyList[j]-1])
+                encrypted = encrypted + arr[i][keyList.index(j)]
             except IndexError:
                 pass
-
-    return(encrypted)
     
+    return(encrypted)
+
 def columnarDecrypt(text, key):
     decrypted = ""
 
