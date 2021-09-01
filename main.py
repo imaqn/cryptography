@@ -60,7 +60,7 @@ def columnarEncrypt(text, key):
     encrypted = ""
 
     # Create and fill array with "_"
-    rows, cols = (len(key), math.ceil(len(text) / len(key)))
+    rows, cols = (len(key), math.ceil(len(text)/len(key)))
     arr = [["_" for i in range(rows)] for j in range(cols)]
 
     # Structure:
@@ -73,10 +73,10 @@ def columnarEncrypt(text, key):
     for i in range(cols):
         for j in range(rows):
             try:
-                arr[i][j] = text[j + (i * (rows))]
+                arr[i][j] = text[j+(i*(rows))]
             except IndexError:
                 pass
-
+    
     # Create list representing string:key as list of ascii
     keyList = []
     for i in range(len(key)):
@@ -84,25 +84,24 @@ def columnarEncrypt(text, key):
 
     # Convert ascii to sorted number for future exporting
     for i in range(len(key)):
-        keyList[keyList.index(min(j for j in keyList if j > (i - 1)))] = i
+        keyList[keyList.index(min(j for j in keyList if j>(i-1)))] = i
 
     # Add character to encrypted, per column based on keylist
     for j in range(rows):
         for i in range(cols):
             try:
-                encrypted = encrypted + arr[i][keyList[j]]
+                encrypted = encrypted + arr[i][keyList[j]-1]
             except IndexError:
                 pass
-
+    
     print(encrypted)
-    return (encrypted)
-
+    return(encrypted)
 
 def columnarDecrypt(text, key):
     decrypted = ""
 
     # Create and fill array with null value
-    rows, cols = (len(key), int(len(text) / len(key)))
+    rows, cols = (len(key), int(len(text)/len(key)))
     arr = [["" for i in range(rows)] for j in range(cols)]
 
     # Create list representing string:key as list of ascii
@@ -112,24 +111,24 @@ def columnarDecrypt(text, key):
 
     # Convert ascii to sorted number for future exporting
     for i in range(len(key)):
-        keyList[keyList.index(min(j for j in keyList if j > (i - 1)))] = i
+        keyList[keyList.index(min(j for j in keyList if j>(i-1)))] = i
 
+    print(rows, cols)
     # Add character to array based on key
     for j in range(rows):
         for i in range(cols):
             try:
-                arr[i][keyList[j]] = text[i + (j * (rows))]
-                print(text[i + (j * (rows))])
+                arr[i][keyList[j]-1] = text[i+(j*(cols))]
             except IndexError:
                 pass
 
-    # Fill the actual character to array
+    # Add character to decrypted
     for i in range(cols):
         for j in range(rows):
             decrypted = decrypted + arr[i][j]
-
+    
     print(decrypted)
-    return (decrypted)
+    return(decrypted)
 
 
 def encrypt(str):
