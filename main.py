@@ -1,7 +1,14 @@
 import math
 
 def at_bash(text):
-    return text[::-1]
+    encrypted = ""
+    for i in range (len(text)):
+        if (ord(text[i]) >= ord('A') and ord(text[i]) <= ord('Z')):
+            encrypted = encrypted + chr(ord('A') + ord('Z')-ord(text[i]))
+        else:
+            encrypted = encrypted + text[i]
+    print(encrypted)
+    return encrypted
 
 def affineEncrypt(text, a, b):
     encrypted = ""
