@@ -101,7 +101,7 @@ def columnarDecrypt(text, key):
     decrypted = ""
 
     # Create and fill array with null value
-    rows, cols = (len(key), int(len(text)/len(key)))
+    rows, cols = (len(key), math.ceil(len(text)/len(key)))
     arr = [["" for i in range(rows)] for j in range(cols)]
 
     # Create list representing string:key as list of ascii
