@@ -13,7 +13,7 @@ def at_bash(text):
 def affineEncrypt(text, a, b):
     encrypted = ""
     for i in range(len(text)):
-        if text[i] != ' ':
+        if (ord(text[i]) >= ord('A') and ord(text[i]) <= ord('Z')):
             encrypted = encrypted + chr(((a * (ord(text[i]) - ord('A')) + b) % 26) + ord('A'))
         else:
             encrypted = encrypted + text[i]
@@ -28,7 +28,7 @@ def affineDecrypt(text, a, b):
             inv_a = i
     decrypted = ""
     for i in range(len(text)):
-        if text[i] != ' ':
+        if (ord(text[i]) >= ord('A') and ord(text[i]) <= ord('Z')):
             decrypted = decrypted + chr((inv_a * (ord(text[i]) + ord('A') - b) % 26) + ord('A'))
         else:
             decrypted = decrypted + text[i]
