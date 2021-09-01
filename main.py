@@ -7,7 +7,6 @@ def at_bash(text):
             encrypted = encrypted + chr(ord('A') + ord('Z')-ord(text[i]))
         else:
             encrypted = encrypted + text[i]
-    print(encrypted)
     return encrypted
 
 def affineEncrypt(text, a, b):
@@ -17,7 +16,6 @@ def affineEncrypt(text, a, b):
             encrypted = encrypted + chr(((a * (ord(text[i]) - ord('A')) + b) % 26) + ord('A'))
         else:
             encrypted = encrypted + text[i]
-    print(encrypted)
     return encrypted
 
 def affineDecrypt(text, a, b):
@@ -32,7 +30,6 @@ def affineDecrypt(text, a, b):
             decrypted = decrypted + chr((inv_a * (ord(text[i]) + ord('A') - b) % 26) + ord('A'))
         else:
             decrypted = decrypted + text[i]
-    print(decrypted)
     return decrypted
 
 def caesarEncrypt(text, shift):
@@ -45,7 +42,6 @@ def caesarEncrypt(text, shift):
         else:
             encrypted = encrypted + chr(ord(text[i]) + int(shift))
 
-    print(encrypted)
     return encrypted
 
 def caesarDecrypt(text, shift):
@@ -137,13 +133,12 @@ def encrypt(text,shift,key,a,b):
     step2 = columnarEncrypt(step1,key)
     step3 = at_bash(step2)
     final = affineEncrypt(step3,a,b)
-    print("Initial message: ",text,"\nProccess: Caesar--> Columnar --> Atbash --> Affine\n\nResult: ",final)
-    print("\nProcess:")
+    print("\nInitial message: ",text,"\nProccess: Caesar--> Columnar --> Atbash --> Affine\n")
     print("Caesar   : ", text , "  -->  ", step1)
     print("Columnar : ", step1 , "  -->  ", step2)
     print("At Bash  : ", step2 , "  -->  ", step3)
     print("Affine   : ", step3 , "  -->  ", final)
-    print(columnarEncrypt('FMIPA',key))
+    print("\n\nFinal Result : ",final)
 
 def decrypt(text):
     print('Undedr Development')
