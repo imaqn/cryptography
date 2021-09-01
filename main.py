@@ -80,6 +80,39 @@ def columnarEncrypt(text, key):
     print(encrypted)
     return(encrypted)
 
+def columnarDecrypt(text, key):
+    decrypted = ""
+
+    # Create and fill array with null value
+    rows, cols = (len(key), int(len(text)/len(key)))
+    arr = [["" for i in range(rows)] for j in range(cols)]
+
+    # Create list representing string:key as list of ascii
+    keyList = []
+    for i in range(len(key)):
+        keyList.append(ord(key[i]))
+
+    # Convert ascii to sorted number for future exporting
+    for i in range(len(key)):
+        keyList[keyList.index(min(j for j in keyList if j>(i-1)))] = i
+
+    # Add character to array based on key
+    for j in range(rows):
+        for i in range(cols):
+            try:
+                arr[i][keyList[j]] = text[i+(j*(rows))]
+                print(text[i+(j*(rows))])
+            except IndexError:
+                pass
+
+    # Fill the actual character to array
+    for i in range(cols):
+        for j in range(rows):
+            decrypted = decrypted + arr[i][j]
+    
+    print(decrypted)
+    return(decrypted)
+
 def encrypt(str):
     print(affine(str))
 
