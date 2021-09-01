@@ -1,20 +1,17 @@
 import math
 
-
-def at_bash(str):
-    return str[::-1]
-
+def at_bash(text):
+    return text[::-1]
 
 def affineEncrypt(text, a, b):
     encrypted = ""
-    for i in range(len(str)):
-        if str[i] != ' ':
+    for i in range(len(text)):
+        if text[i] != ' ':
             encrypted = encrypted + chr(((a * (ord(text[i]) - ord('A')) + b) % 26) + ord('A'))
         else:
             encrypted = encrypted + text[i]
     print(encrypted)
     return encrypted
-
 
 def affineDecrypt(text, a, b):
     inv_a = 0
@@ -31,10 +28,11 @@ def affineDecrypt(text, a, b):
     print(decrypted)
     return decrypted
 
-
 def caesarEncrypt(text, shift):
     encrypted = ""
     for i in range(len(text)):
+        # if (ord(text[i]) < 65):
+        #     pass
         if (ord(text[i]) + int(shift) > 90):
             encrypted = encrypted + chr(ord(text[i]) + int(shift) - 26)
         else:
@@ -42,7 +40,6 @@ def caesarEncrypt(text, shift):
 
     print(encrypted)
     return encrypted
-
 
 def caesarDecrypt(text, shift):
     decrypted = ""
@@ -54,7 +51,6 @@ def caesarDecrypt(text, shift):
 
     print(decrypted)
     return decrypted
-
 
 def columnarEncrypt(text, key):
     encrypted = ""
@@ -90,13 +86,13 @@ def columnarEncrypt(text, key):
     for j in range(rows):
         for i in range(cols):
             try:
-                encrypted = encrypted + arr[i][keyList[j]-1]
+                encrypted = encrypted + arr[i][keyList[j]]
+                print(j,i,arr[i][keyList[j]-1])
             except IndexError:
                 pass
-    
-    print(encrypted)
-    return(encrypted)
 
+    return(encrypted)
+    
 def columnarDecrypt(text, key):
     decrypted = ""
 
@@ -130,22 +126,40 @@ def columnarDecrypt(text, key):
     print(decrypted)
     return(decrypted)
 
+def encrypt(text,shift,key,a,b):
+    step1 = caesarEncrypt(text,shift)
+    step2 = columnarEncrypt(step1,key)
+    step3 = at_bash(step2)
+    final = affineEncrypt(step3,a,b)
+    print("Initial message: ",text,"\nProccess: Caesar--> Columnar --> Atbash --> Affine\n\nResult: ",final)
+    print("\nProcess:")
+    print("Caesar   : ", text , "  -->  ", step1)
+    print("Columnar : ", step1 , "  -->  ", step2)
+    print("At Bash  : ", step2 , "  -->  ", step3)
+    print("Affine   : ", step3 , "  -->  ", final)
+    print(columnarEncrypt('FMIPA',key))
 
-def encrypt(str):
-    print('Test')
-
-
-def decrypt(str):
-    print('Test')
-
+def decrypt(text):
+    print('Undedr Development')
 
 def main():
-    str = input('Enter the string: ')
-    opt = input('Choose 1 to encrypt or 2 to decrypt: ')
-    if opt == '1':
-        encrypt(str)
-    elif opt == '2':
-        decrypt(str)
+    print("////// CLASSIC CIPHER //////")
+    while(True):
+        opt = input('Option:\n1. Encrypt\n2. Exit\n>>')
+        if(opt=='2'):
+            print('Thankyou for using our app!! :D')
+            return False
+        elif(opt=='1'):
+            opt = input('Option:\n1. Default encryption\n2. Custom Encryption\n>>')
+            if opt == '1':
+                (shift, key, a, b) = (3, 'FMIPA', 3, 5)
+                text = input("\nInput message to encrypt:\n>>").upper()
+                encrypt(text,shift,key,a,b)
+                input("\nThats it\n\n\n")
+            elif opt == '2':
+                decrypt(text)
+        else:
+            print('Please...')
 
 
 if __name__ == '__main__':
