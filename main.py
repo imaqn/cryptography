@@ -52,7 +52,6 @@ def caesarDecrypt(text, shift):
         else:
             decrypted = decrypted + chr(ord(text[i]) - int(shift))
 
-    print(decrypted)
     return decrypted
 
 def columnarEncrypt(text, key):
@@ -116,7 +115,7 @@ def columnarDecrypt(text, key):
     for j in range(rows):
         for i in range(cols):
             try:
-                arr[i][keyList[j]-1] = text[i+(j*(cols))]
+                arr[i][keyList.index(j)] = text[i+(j*(cols))]
             except IndexError:
                 pass
 
@@ -125,7 +124,6 @@ def columnarDecrypt(text, key):
         for j in range(rows):
             decrypted = decrypted + arr[i][j]
     
-    print(decrypted)
     return(decrypted)
 
 def encrypt(text,shift,key,a,b):
@@ -140,25 +138,39 @@ def encrypt(text,shift,key,a,b):
     print("Affine   : ", step3 , "  -->  ", final)
     print("\n\nFinal Result : ",final)
 
-def decrypt(text):
-    print('Undedr Development')
+def decrypt(text, shift, key, a, b):
+    step1 = affineDecrypt(text,a,b)
+    step2 = at_bash(step1)
+    step3 = columnarDecrypt(step2,key)
+    final = caesarDecrypt(step3,shift)
+    print("\nInitial message: ",text,"\nProccess: Caesar--> Columnar --> Atbash --> Affine\n")
+    print("Affine   : ", text , "  -->  ", step1)
+    print("At Bash  : ", step1 , "  -->  ", step2)
+    print("Columnar : ", step2 , "  -->  ", step3)
+    print("Caesar   : ", step3 , "  -->  ", final)
+    print("\n\nFinal Result : ",final)
 
 def main():
     print("////// CLASSIC CIPHER //////")
     while(True):
-        opt = input('Option:\n1. Encrypt\n2. Exit\n>>')
+        opt = input('Option:\n1. Encrypt/Decrypt\n2. Exit\n>>')
         if(opt=='2'):
             print('Thankyou for using our app!! :D')
             return False
         elif(opt=='1'):
-            opt = input('Option:\n1. Default encryption\n2. Custom Encryption\n>>')
+            opt = input('Option:\n1. Default encryption\n2. Default Decryption\n3.Custom \n>>')
             if opt == '1':
                 (shift, key, a, b) = (3, 'FMIPA', 3, 5)
                 text = input("\nInput message to encrypt:\n>>").upper()
                 encrypt(text,shift,key,a,b)
                 input("\nThats it\n\n\n")
             elif opt == '2':
-                decrypt(text)
+                (shift, key, a, b) = (3, 'FMIPA', 3, 5)
+                text = input("\nInput message to decrypt:\n>>").upper()
+                decrypt(text,shift,key,a,b)
+                input("\nThats it\n\n\n")
+            elif opt == '3':
+                print("Under Development")
         else:
             print('Please...')
 
